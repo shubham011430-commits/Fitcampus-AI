@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exercise • FitCampus AI</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo">FC</div><div><div class="brand-name">FitCampus AI</div><div class="brand-sub">Student Fitness Platform</div></div></div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="index.html"><span class="ico">🏠</span> Home</a></li>
+            <li class="nav-item"><a href="activity.html"><span class="ico">🏃</span> Activity</a></li>
+            <li class="nav-item"><a href="exercise.html" class="active"><span class="ico">💪</span> Exercise</a></li>
+            <li class="nav-item"><a href="diet.html"><span class="ico">🥗</span> Diet</a></li>
+            <li class="nav-item"><a href="challenges.html"><span class="ico">🏆</span> Challenges</a></li>
+            <li class="nav-item"><a href="leaderboard.html"><span class="ico">📊</span> Leaderboard</a></li>
+            <li class="nav-item"><a href="assistant.html"><span class="ico">🤖</span> AI Assistant</a></li>
+            <li class="nav-item"><a href="profile.html"><span class="ico">👤</span> Profile</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="profile-chip" id="profileChip"><div class="avatar">U</div><div><div class="name">Loading…</div></div></div>
+            <button class="btn btn-ghost btn-block mt-3" id="logoutBtn" style="color:#fff">Logout</button>
+        </div>
+    </aside>
+    <main class="main">
+        <div class="topbar">
+            <div><div class="page-title">Exercise</div><div class="page-sub">AI-powered form checking</div></div>
+        </div>
+
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-title">🎥 Live Form Check <span class="badge" id="selectedExercise">Squat</span></div>
+                <div class="camera-wrap">
+                    <video id="videoEl" playsinline muted></video>
+                    <canvas id="canvasEl" width="640" height="480"></canvas>
+                    <div class="camera-overlay" id="cameraOverlay">Click "Start Form Check" to begin</div>
+                </div>
+                <div class="form-stats">
+                    <div class="form-stat"><div class="v" id="repCount">0</div><div class="l">Reps</div></div>
+                    <div class="form-stat"><div class="v" id="formScore">0</div><div class="l">Form Score</div></div>
+                    <div class="form-stat"><div class="v" id="phaseLabel">Up</div><div class="l">Phase</div></div>
+                </div>
+                <div class="feedback-box" id="feedbackText">Start to see feedback</div>
+                <div class="flex gap-2 mt-3">
+                    <button class="btn btn-primary" id="startFormCheck">▶ Start Form Check</button>
+                    <button class="btn btn-danger" id="stopFormCheck">⏹ Stop &amp; Save</button>
+                </div>
+                <div class="text-sm text-muted mt-3">⚠️ Camera is accessed only after you click Start. Pose detection runs locally in your browser.</div>
+            </div>
+            <div class="card"><div class="card-title">🏋️ Exercises</div><div class="grid grid-2" id="exerciseList"><div class="loader"></div></div></div>
+        </div>
+    </main>
+</div>
+<nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+        <a href="index.html"><span class="ico">🏠</span>Home</a>
+        <a href="activity.html"><span class="ico">🏃</span>Activity</a>
+        <a href="exercise.html" class="active"><span class="ico">💪</span>Exercise</a>
+        <a href="diet.html"><span class="ico">🥗</span>Diet</a>
+        <a href="assistant.html"><span class="ico">🤖</span>AI</a>
+        <a href="profile.html"><span class="ico">👤</span>Profile</a>
+    </div>
+</nav>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/exercise.js"></script>
+</body>
+</html>

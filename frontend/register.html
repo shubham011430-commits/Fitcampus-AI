@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Register • FitCampus AI</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div style="text-align:center; margin-bottom: 18px;">
+            <div class="brand-logo" style="margin:0 auto 10px; width:54px; height:54px; font-size:24px;">FC</div>
+            <div class="auth-title">Join FitCampus</div>
+            <div class="auth-sub">Create your account in 30 seconds</div>
+        </div>
+        <form id="regForm">
+            <div class="form-group">
+                <label class="form-label">I am a...</label>
+                <div class="student-type-selector">
+                    <div class="student-type-card selected" data-type="day_scholar">
+                        <div class="student-type-icon">🎒</div>
+                        <div class="student-type-title">Day Scholar</div>
+                        <div class="student-type-desc">I travel to college daily</div>
+                    </div>
+                    <div class="student-type-card" data-type="hosteler">
+                        <div class="student-type-icon">🏠</div>
+                        <div class="student-type-title">Hosteler</div>
+                        <div class="student-type-desc">I live in college hostel</div>
+                    </div>
+                </div>
+                <input type="hidden" id="studentType" value="day_scholar" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input class="form-input" type="text" id="name" required placeholder="Your name" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input class="form-input" type="email" id="email" required placeholder="you@campus.edu" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password (min 6 chars)</label>
+                <input class="form-input" type="password" id="password" required minlength="6" placeholder="••••••••" />
+            </div>
+            <div class="grid grid-3">
+                <div class="form-group">
+                    <label class="form-label">Age</label>
+                    <input class="form-input" type="number" id="age" min="10" max="100" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Weight (kg)</label>
+                    <input class="form-input" type="number" id="weight" step="0.1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Height (cm)</label>
+                    <input class="form-input" type="number" id="height" step="0.1" />
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Create Account</button>
+        </form>
+        <div class="auth-footer">
+            Already have an account? <a href="login.html">Sign in</a>
+        </div>
+    </div>
+</div>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+Auth.redirectIfLogged("index.html");
+
+// Student type selection
+document.querySelectorAll(".student-type-card").forEach(card => {
+    card.addEventListener("click", () => {
+        document.querySelectorAll(".student-type-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        document.getElementById("studentType").value = card.dataset.type;
+    });
+});
+
+document.getElementById("regForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector("button");
+    btn.disabled = true; btn.innerHTML = '<span class="loader"></span> Creating...';
+    try {
+        const res = await API.post("/api/auth/register", {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            student_type: document.getElementById("studentType").value,
+            age: parseInt(document.getElementById("age").value) || null,
+            weight: parseFloat(document.getElementById("weight").value) || null,
+            height: parseFloat(document.getElementById("height").value) || null,
+        });
+        API.setToken(res.access_token);
+        API.setUser(res.user);
+        toast("Welcome to FitCampus! 🎉", "success");
+        setTimeout(() => window.location.href = "index.html", 500);
+    } catch (err) {
+        toast(err.message, "error");
+        btn.disabled = false; btn.textContent = "Create Account";
+    }
+});
+</script>
+</body>
+</html>

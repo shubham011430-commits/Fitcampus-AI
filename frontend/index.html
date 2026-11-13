@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard • FitCampus AI</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-logo">FC</div><div><div class="brand-name">FitCampus AI</div><div class="brand-sub">Student Fitness Platform</div></div></div>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="index.html" class="active"><span class="ico">🏠</span> Home</a></li>
+            <li class="nav-item"><a href="activity.html"><span class="ico">🏃</span> Activity</a></li>
+            <li class="nav-item"><a href="exercise.html"><span class="ico">💪</span> Exercise</a></li>
+            <li class="nav-item"><a href="diet.html"><span class="ico">🥗</span> Diet</a></li>
+            <li class="nav-item"><a href="challenges.html"><span class="ico">🏆</span> Challenges</a></li>
+            <li class="nav-item"><a href="leaderboard.html"><span class="ico">📊</span> Leaderboard</a></li>
+            <li class="nav-item"><a href="assistant.html"><span class="ico">🤖</span> AI Assistant</a></li>
+            <li class="nav-item"><a href="profile.html"><span class="ico">👤</span> Profile</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="profile-chip" id="profileChip"><div class="avatar">U</div><div><div class="name">Loading…</div></div></div>
+            <button class="btn btn-ghost btn-block mt-3" id="logoutBtn" style="color:#fff">Logout</button>
+        </div>
+    </aside>
+    <main class="main">
+        <div class="topbar">
+            <div><div class="page-title">Dashboard</div><div class="page-sub">Your daily fitness overview</div></div>
+        </div>
+
+        <div class="welcome-card" id="welcomeGreet">
+            <div class="welcome-greet">Good Morning, Student 👋</div>
+            <div class="welcome-sub">Let's stay active and keep your streak alive!</div>
+            <div class="welcome-stats">
+                <div class="stat"><div class="stat-val s1">0</div><div class="stat-lbl">🔥 Streak</div></div>
+                <div class="stat"><div class="stat-val s2">0</div><div class="stat-lbl">⭐ Points</div></div>
+                <div class="stat"><div class="stat-val s3">#-</div><div class="stat-lbl">🏆 Rank</div></div>
+            </div>
+        </div>
+
+        <!-- JOURNEY TRACKER -->
+        <div class="journey-card mt-4" id="journeyCard">
+            <div class="flex-between" style="position:relative; z-index:1;">
+                <div><div class="journey-title">🚶 Start My Day</div><div class="journey-sub">Track your journey from home to college</div></div>
+                <div class="journey-status" id="journeyStatus">⏸️ Not Started</div>
+            </div>
+            <div id="journeyPreStart" style="position:relative; z-index:1;">
+                <div style="margin-bottom:12px;">
+                    <div style="font-size:12px; color:var(--blue-100); margin-bottom:8px;">How are you travelling?</div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <div class="mode-chip selected" data-mode="walking">🚶 Walking</div>
+                        <div class="mode-chip" data-mode="cycling">🚴 Cycling</div>
+                        <div class="mode-chip" data-mode="bus">🚌 Bus</div>
+                        <div class="mode-chip" data-mode="auto">🛺 Auto</div>
+                        <div class="mode-chip" data-mode="own_vehicle">🏍️ Own Vehicle</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="startJourneyBtn" style="background: linear-gradient(135deg, #10b981, #059669);">▶️ Start Journey (Leaving Home)</button>
+            </div>
+            <div id="journeyOngoing" class="hidden" style="position:relative; z-index:1;">
+                <div class="journey-stats">
+                    <div class="journey-stat"><div class="v" id="jTimer">00:00</div><div class="l">Duration</div></div>
+                    <div class="journey-stat"><div class="v" id="jMode">🚶</div><div class="l">Mode</div></div>
+                    <div class="journey-stat"><div class="v" id="jDist">0.0</div><div class="l">km (GPS)</div></div>
+                    <div class="journey-stat"><div class="v" id="jCal">0</div><div class="l">kcal est.</div></div>
+                </div>
+                <div class="journey-actions">
+                    <button class="btn btn-primary" id="stopJourneyBtn" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🏁 Reached College</button>
+                    <button class="btn btn-secondary" id="cancelJourneyBtn" style="background: rgba(255,255,255,.15); color:#fff;">Cancel</button>
+                </div>
+                <div style="font-size:11px; color:var(--blue-100); margin-top:10px;">💡 GPS tracking optional — works even without location permission</div>
+            </div>
+            <div id="journeyCompleted" class="hidden" style="position:relative; z-index:1;">
+                <div class="journey-stats">
+                    <div class="journey-stat"><div class="v" id="jcDur">0</div><div class="l">Minutes</div></div>
+                    <div class="journey-stat"><div class="v" id="jcDist">0</div><div class="l">km</div></div>
+                    <div class="journey-stat"><div class="v" id="jcSteps">0</div><div class="l">Steps</div></div>
+                    <div class="journey-stat"><div class="v" id="jcCal">0</div><div class="l">kcal</div></div>
+                </div>
+                <div style="text-align:center; margin-top:12px; font-size:13px; color:var(--blue-100);">✅ Great job! Check canteen recommendations below 👇</div>
+            </div>
+        </div>
+
+        <!-- CANTEEN RECOMMENDATION -->
+        <div class="canteen-card mt-4" id="canteenCard">
+            <div class="canteen-title">🍽️ College Canteen — What to Eat?</div>
+            <div id="canteenContent"><div class="empty-state"><div class="ico">🎒</div>Complete your journey to see personalized canteen recommendations</div></div>
+        </div>
+
+        <div class="grid grid-4 mt-4">
+            <div class="stat-card"><div class="stat-icon">👣</div><div><div class="stat-val-lg" id="ySteps">0</div><div class="stat-lbl-sm">Yesterday Steps</div></div></div>
+            <div class="stat-card"><div class="stat-icon green">⏱️</div><div><div class="stat-val-lg" id="yEx">0</div><div class="stat-lbl-sm">Yesterday Exercise</div></div></div>
+            <div class="stat-card"><div class="stat-icon orange">🔥</div><div><div class="stat-val-lg" id="yCal">0</div><div class="stat-lbl-sm">Yesterday Calories</div></div></div>
+            <div class="stat-card"><div class="stat-icon purple">🎯</div><div><div class="stat-val-lg" id="yGoal">0%</div><div class="stat-lbl-sm">Yesterday Goal</div></div></div>
+        </div>
+
+        <div class="grid grid-2 mt-4">
+            <div class="card">
+                <div class="card-title">📅 Yesterday's Activity</div>
+                <div class="progress-wrap" id="yesterdayBar">
+                    <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+                    <div class="progress-label"><span>Goal completion</span><span class="pct">0%</span></div>
+                </div>
+                <div class="text-sm text-muted mt-3">Keep going — consistency beats intensity!</div>
+            </div>
+            <div class="card">
+                <div class="card-title">📈 Today's Progress</div>
+                <div style="display:flex; align-items:center; gap:18px;">
+                    <div class="circle-progress" id="todayCircle" style="--pct:0">
+                        <div style="text-align:center"><div class="val">0%</div><div class="lbl">Goal</div></div>
+                    </div>
+                    <div style="flex:1">
+                        <div class="flex-between mb-2"><span class="text-sm">Exercise</span><b id="todayMin">0 min</b></div>
+                        <div class="flex-between"><span class="text-sm">Completed</span><b id="todayDone">0</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="mb-3">
+                <div class="page-title" style="font-size:18px">🎯 Today's Recommended Activities</div><div class="page-sub">Personalized for you</div>
+            </div>
+            <div class="grid grid-3" id="recsList"><div class="empty-state"><div class="loader"></div></div></div>
+        </div>
+    </main>
+</div>
+<nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+        <a href="index.html" class="active"><span class="ico">🏠</span>Home</a>
+        <a href="activity.html"><span class="ico">🏃</span>Activity</a>
+        <a href="exercise.html"><span class="ico">💪</span>Exercise</a>
+        <a href="diet.html"><span class="ico">🥗</span>Diet</a>
+        <a href="assistant.html"><span class="ico">🤖</span>AI</a>
+        <a href="profile.html"><span class="ico">👤</span>Profile</a>
+    </div>
+</nav>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
